@@ -53,5 +53,12 @@ public class Methods {
         return 0;
     }
 
+    public List<String> getSubList(List<String> list, int startWith, int size) {
+        List<String> res = new ArrayList<>();
+        for (int i = startWith; i < (startWith+size); i++) {
+            res.add(list.get(i));
+            }
+        return res;
+    }
 
 }
