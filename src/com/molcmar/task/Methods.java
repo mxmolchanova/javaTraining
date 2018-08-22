@@ -2,6 +2,7 @@ package com.molcmar.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by dsk14 on 8/21/2018.
@@ -9,27 +10,21 @@ import java.util.List;
 public class Methods {
 
     public int countA1(List<String> list) {
-        int count = 0;
-        for (String s : list) {
-            if(s.equals("a1")) {
-                count++;
-            }
-        }
-        return count;
+
+        return (int) list.stream().filter("a1"::equals).count();
     }
 
-    public Object getFirstElement(List<String> list) {
-        if (list.isEmpty()) {
-            return 0;
-        }
-        return list.get(0);
+    public String getFirstElement(List<String> list) {
+
+        return list.stream().findFirst().orElse("0");
     }
 
-    public Object getLastElement(List<String> list) {
+    public Optional<String> getLastElement(List<String> list) {
+
         if (list.isEmpty()) {
-            return 0;
+            return Optional.empty();
         }
-        return list.get(list.size()-1);
+        return list.stream().skip(list.size()-1).findFirst();
     }
 
     public Object getEqualElement(List<String> list, String e) {
@@ -37,18 +32,12 @@ public class Methods {
             return 0;
         }
 
-        for (int i = 0; i < list.size(); i++) {
-            String value = list.get(i);
-            if (e.equals(value)) {
-                return value;
-            }
-        }
-        return 0;
+        return (list.stream().filter(e::equals).findFirst().isPresent() ? e : 0);
     }
 
     public Object getValueOf(List<String> list, int index) {
         if (index < list.size()) {
-            return list.get(index);
+            return list.stream().skip(index).findFirst().get();
         }
         return 0;
     }
